@@ -1,0 +1,88 @@
+# Prompt Registry
+# Source of truth for active prompt versions.
+# Do not edit active_version directly — use the change-control workflow.
+# Last updated: 2025-03-16T09:00:00Z
+
+schema_version: "1"
+
+prompts:
+  system:
+    name: system
+    description: |
+      Primary system prompt for the Aria assistant. Controls identity, tone,
+      accuracy standards, prohibited behaviors, and conversation behavior.
+      This is the highest-stakes prompt in the system — all MINOR and MAJOR
+      changes require eval evidence.
+    owner: ai-platform@example.com
+    active_version: "1.1.0"
+    tags:
+      - production
+      - safety-relevant
+      - core-identity
+
+    versions:
+      - version: "1.0.0"
+        file: prompts/versions/system-v1.0.0.md
+        status: deprecated
+        deployed_at: "2025-01-15T08:00:00Z"
+        deprecated_at: "2025-03-16T09:00:00Z"
+        proposal_id: null  # Initial version, no proposal (seeded directly)
+        sha256: null  # TODO: populate on deploy
+
+      - version: "1.1.0"
+        file: prompts/versions/system-v1.1.0.md
+        status: active
+        deployed_at: "2025-03-16T09:00:00Z"
+        deprecated_at: null
+        proposal_id: prop-2025-001
+        sha256: null  # TODO: populate on deploy
+
+    rollback_history: []
+    # Rollback events are appended here as:
+    #   - id: rollback-<hex>
+    #     rolled_back_from: "X.Y.Z"
+    #     rolled_back_to: "A.B.C"
+    #     reason: "..."
+    #     authorized_by: "..."
+    #     executed_by: "..."
+    #     timestamp: "..."
+    #     related_proposal_id: null
+
+  # Example of a second registered prompt (content files not yet created):
+  # tool-search:
+  #   name: tool-search
+  #   description: |
+  #     System prompt injected when the assistant has access to web search tools.
+  #     Controls search invocation strategy and result citation behavior.
+  #   owner: ai-platform@example.com
+  #   active_version: "1.0.0"
+  #   tags:
+  #     - production
+  #     - tool-use
+  #   versions:
+  #     - version: "1.0.0"
+  #       file: prompts/versions/tool-search-v1.0.0.md
+  #       status: active
+  #       deployed_at: "2025-01-15T08:00:00Z"
+  #       deprecated_at: null
+  #       proposal_id: null
+  #   rollback_history: []
+
+audit_log:
+  # Append-only deployment and rollback events.
+  # This log is the durable record of what ran in production and when.
+  - event: deployed
+    prompt_name: system
+    version: "1.0.0"
+    actor: deploy-bot
+    timestamp: "2025-01-15T08:00:00Z"
+    proposal_id: null
+    notes: "Initial seed deployment."
+
+  - event: deployed
+    prompt_name: system
+    version: "1.1.0"
+    actor: deploy-bot
+    timestamp: "2025-03-16T09:00:00Z"
+    proposal_id: prop-2025-001
+    notes: "Deployed to 100% of traffic during low-usage window."

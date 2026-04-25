@@ -1,0 +1,31 @@
+id: prop-2024-001
+prompt_id: system
+from_version: "1.0.0"
+to_version: "1.1.0"
+author: "alice"
+created_at: "2024-01-15"
+summary: "Clarify tone guidance and add explicit handling for ambiguous requests"
+rationale: |
+  User research showed the assistant was sometimes too terse in responses to complex
+  questions and occasionally tried to guess intent rather than asking for clarification.
+  This led to wasted round-trips and user frustration. We also received feedback that
+  the assistant's tone was inconsistent — overly formal in some interactions, too casual
+  in others. This proposal adds an explicit tone section and a clear policy for ambiguous
+  requests (ask exactly one clarifying question, or state an assumption if it is safe to do so).
+changes:
+  - type: addition
+    description: "Added 'Tone and Communication Style' section specifying conversational but professional style"
+  - type: addition
+    description: "Added 'Handling Ambiguous Requests' section — ask one clarifying question before proceeding"
+  - type: modification
+    description: "Expanded 'Code Output' section with guidance on comments and dependency preference"
+  - type: modification
+    description: "Added 'Context Retention' section to reduce redundant explanations"
+risks:
+  - "The single-clarifying-question rule may slightly increase latency on ambiguous requests"
+  - "Tone guidance may cause behavioral changes in edge cases where brevity was previously preferred"
+  - "Assumption-and-proceed path requires good judgment; may not always choose the right assumption"
+approval_status: approved
+approved_by:
+  - "bob"
+approved_at: "2024-01-16"
