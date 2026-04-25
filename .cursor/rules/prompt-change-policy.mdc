@@ -1,0 +1,29 @@
+---
+description: Change control policy for prompts
+globs: prompts/**
+alwaysApply: false
+---
+
+# Prompt Change Control Policy
+
+## Never edit approved prompts
+Once a prompt version has `approval_status: approved`, it is immutable.
+Create a new version file instead.
+
+```yaml
+# ✅ GOOD — create a new version
+prompts/versions/system-v1.2.0.md          # new file
+prompts/versions/system-v1.2.0.proposal.yaml
+
+# ❌ BAD — editing an approved version
+# Do not edit system-v1.1.0.md if it has approval_status: approved
+```
+
+## Every proposal needs a rationale
+"Better wording" is not a rationale. Describe the specific behavioral change and why it's needed.
+
+## Update the registry
+After approval, update `prompts/registry.yaml` to reflect the new active version and mark the old one as `superseded`.
+
+## Breaking changes bump major
+If a prompt change could cause an agent to behave differently in a way that breaks downstream systems, it's a major version bump.

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "matcher": "Write|StrReplace",
+        "command": ".cursor/hooks/guard-approved-prompts.sh",
+        "failClosed": false
+      }
+    ]
+  }
+}
